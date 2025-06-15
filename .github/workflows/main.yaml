@@ -1,22 +1,30 @@
-name: Deploy to Surge
+name: 🚀 Deploy to Surge - KeydelM
 
+# Ejecutar cada vez que haya push a la rama main
 on:
   push:
     branches:
       - main
 
 jobs:
-  build-and-deploy:
+  deploy:
+    # Usamos un runner con Ubuntu para correr los comandos
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      # Paso 1: Clonar el repositorio para trabajar con los archivos
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install Surge
+      # Paso 2: Instalar Surge CLI globalmente usando npm
+      - name: Install Surge CLI
         run: npm install --global surge
 
+      # Paso 3: Desplegar en Surge usando token de seguridad
       - name: Deploy to Surge.sh
         env:
+          # Token privado de Surge guardado en GitHub Secrets
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
-        run: surge ./ https://KeydelM.surge.sh --token $SURGE_TOKEN
+        run: |
+          echo "🚀 Desplegando en https://KeydelM.surge.sh"
+          surge ./ https://KeydelM.surge.sh --token $SURGE_TOKEN
